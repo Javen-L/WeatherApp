@@ -1,11 +1,11 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-import MainUI from './components/MainCard/MainCard';
+import MainCard from './components/MainCard/MainCard';
 
 function App() {
   return (
     <div className="App">
-      <MainUI />
+      <MainCard />
     </div>
   );
 }
