@@ -1,13 +1,13 @@
 
 import React from 'react';
-import './WeatherDis.css';
+import './WeatherDisplay.css';
 
-function NextDay() {
+function WeatherDisplay() {
   return (
     <div>
-        <p>This is the NextDay component</p>
+        <p>This is the WeatherDisplay component</p>
     </div>
   );
 }
 
-export default NextDay;
+export default WeatherDisplay;

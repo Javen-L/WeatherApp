@@ -2,12 +2,12 @@
 import React from 'react';
 import './WeatherDetails.css';
 
-function NextDay() {
+function WeatherDetails() {
   return (
     <div>
-        <p>This is the NextDay component</p>
+        <p>This is the WeatherDetails component</p>
     </div>
   );
 }
 
-export default NextDay;
+export default WeatherDetails;
