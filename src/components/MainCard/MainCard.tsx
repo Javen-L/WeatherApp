@@ -1,32 +1,62 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import './MainCard.css';
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import WeatherDisplay from '../WeatherDisplay/WeatherDisplay';
+
+import useGetWeatherData from '../../api/api-hooks';
+import { FetchState } from '../../types';
+
+const cardStyle = {
+  display: "flex",
+  height: "90vh",
+  width: "70vw",
+  backgroundSize:'cover', 
+  flexDirection:'row', 
+  backgroundImage:`url(${require("../../assets/sunset.jpg")})`
+};
+
+const leftCardStyle = {
+  width:'100%',
+  display:'flex',
+  flexDirection:'column',
+  justifyContent:'space-between'
+}
 
 function MainCard() {
+  const lat = 47.603230
+  const long = -122.330280
+  const [weatherData, fetchState, getWeatherData] = useGetWeatherData(lat, long);
+
+  useEffect(() => {
+    getWeatherData()
+  }, []);
+  
   return (
-    <div style={{display: 'flex', justifyContent: 'center', marginTop: 50}}>
-      <Card sx={{display: 'flex', backgroundSize:'cover', height:800, maxWidth:1000, flexDirection:'row', backgroundImage:`url(${require("../../assets/sunset.jpg")})`}} raised={true}>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+    <div className = "main">
+      <Card sx={cardStyle} raised={true}>
+        <CardContent sx={leftCardStyle}>
+          <Typography gutterBottom variant="subtitle2" component="h2">
             Weather App
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
-          </Typography>
+          {fetchState === FetchState.LOADING && <p>Fetching weather...</p>}
+          {fetchState === FetchState.ERROR && (
+            <>
+              <p>OOps!! Something went wrong</p>
+            </>
+          )}
+          {fetchState === FetchState.SUCCESS && (
+            <>
+              <WeatherDisplay data={weatherData} />
+            </>
+          )}
+          {/* <WeatherDisplay /> */}
         </CardContent>
-        <CardContent sx={{opacity: .5, backgroundColor: '#000'}}>
-          <Typography gutterBottom variant="h5" component="h2" color='#fff'>
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="#fff" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
-          </Typography>
+        <CardContent sx={{opacity: .5, backgroundColor: '#000', width:'100%'}}>
+        
         </CardContent>
       </Card>
     
